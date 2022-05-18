@@ -1,41 +1,44 @@
 {
-  "name": "mesto",
-  "version": "1.0.0",
-  "description": "Интерактивная страница, на которой можно добавлять и удалять карточки с фотографиями, ставить лайки, редактировать профиль.",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack serve",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/irina-tim/mesto.git"
-  },
-  "author": "Irina Timoshenko",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/irina-tim/mesto/issues"
-  },
-  "homepage": "https://github.com/irina-tim/mesto#readme",
+  "name": "mesto-react",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://irina-tim.github.io/mesto-react/",
   "dependencies": {
-    "core-js": "^3.21.1"
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "@babel/core": "^7.17.8",
-    "@babel/preset-env": "^7.16.11",
-    "autoprefixer": "^10.4.4",
-    "babel-loader": "^8.2.3",
-    "clean-webpack-plugin": "^4.0.0",
-    "css-loader": "^6.7.1",
-    "cssnano": "^5.1.4",
-    "gh-pages": "^3.2.3",
-    "html-webpack-plugin": "^5.5.0",
-    "mini-css-extract-plugin": "^2.6.0",
-    "postcss-loader": "^6.2.1",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "gh-pages": "^3.2.3"
   }
 }
