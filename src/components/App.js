@@ -9,6 +9,10 @@ import DeletionConfirmationPopup from "./DeletionConfirmationPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { Route, Routes } from "react-router-dom";
+import Register from "./Register";
+import Login from "./Login";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   //Popups state
@@ -22,6 +26,7 @@ function App() {
   const [cardToRemove, setCardToRemove] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     api
@@ -168,17 +173,28 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page" onClick={closeAllPopups}>
-        <Header />
-        <Main
-          onEditAvatar={handleEditAvatarClick}
-          isOpened={isEditProfilePopupOpen}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          onTrashButtonClick={handleCardTrashClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-        />
+        <Header loggedIn={loggedIn} />
+        <Routes>
+          <Route
+            index
+            element={
+              <PrivateRoute
+                component={Main}
+                loggedIn={loggedIn}
+                onEditAvatar={handleEditAvatarClick}
+                isOpened={isEditProfilePopupOpen}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onCardClick={handleCardClick}
+                onTrashButtonClick={handleCardTrashClick}
+                cards={cards}
+                onCardLike={handleCardLike}
+              />
+            }
+          />
+          <Route path="/sign-up" element={<Register />} />
+          <Route path="/sign-in" element={<Login />} />
+        </Routes>
         <Footer />
         <EditProfilePopup
           isOpened={isEditProfilePopupOpen}
