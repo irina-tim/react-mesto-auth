@@ -13,6 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import Register from "./Register";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
   //Popups state
@@ -21,6 +22,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [isCardDeletePopupOpen, setIsCardDeletePopupOpen] = useState(false);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(true);
 
   const [cards, setCards] = useState([]);
   const [cardToRemove, setCardToRemove] = useState({});
@@ -79,6 +81,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsCardDeletePopupOpen(false);
+    setIsInfoPopupOpen(false);
     setSelectedCard({});
   }
 
@@ -221,6 +224,7 @@ function App() {
           onSubmit={handleCardDelete}
           isLoading={isLoading}
         />
+        <InfoTooltip onClose={closeAllPopups} isOpened={isInfoPopupOpen} />
       </div>
     </CurrentUserContext.Provider>
   );
