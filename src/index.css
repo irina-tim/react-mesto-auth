@@ -45,3 +45,10 @@
 @import url(./blocks/popup-photo-view/__close-button/popup-photo-view__close-button.css);
 @import url(./blocks/popup-photo-view/__image/popup-photo-view__image.css);
 @import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/sign/sign.css);
+@import url(./blocks/sign/__input/sign__input.css);
+@import url(./blocks/sign/__link/sign__link.css);
+@import url(./blocks/sign/__paragraph/sign__paragraph.css);
+@import url(./blocks/sign/__submit-button/sign__submit-button.css);
+@import url(./blocks/sign/__title/sign__title.css);
+@import url(./blocks/sign/__form/sign__form.css);

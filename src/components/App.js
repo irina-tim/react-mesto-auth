@@ -26,7 +26,7 @@ function App() {
   const [cardToRemove, setCardToRemove] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   useEffect(() => {
     api
