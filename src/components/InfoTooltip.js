@@ -1,7 +1,7 @@
 import successImage from "../images/infotooltip-success.svg";
 import errorImage from "../images/infotooltip-error.svg";
 
-function InfoTooltip({ onClose, isOpened }) {
+function InfoTooltip({ onClose, isOpened, isOk }) {
   const successMessage = "Вы успешно зарегистрировались!";
   const errorMessage = "Что-то пошло не так! Попробуйте еще раз.";
 
@@ -11,13 +11,13 @@ function InfoTooltip({ onClose, isOpened }) {
         <div
           className="popup-info__image"
           style={{
-            backgroundImage: true
+            backgroundImage: isOk
               ? `url(${successImage})`
               : `url(${errorImage})`,
           }}
         ></div>
         <h2 className="popup-info__title">
-          {true ? successMessage : errorMessage}
+          {isOk ? successMessage : errorMessage}
         </h2>
         <button
           onClick={onClose}

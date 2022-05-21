@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+//import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
@@ -14,6 +15,7 @@ import Register from "./Register";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
 import InfoTooltip from "./InfoTooltip";
+import * as auth from "../utils/auth.js";
 
 function App() {
   //Popups state
@@ -22,13 +24,33 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [isCardDeletePopupOpen, setIsCardDeletePopupOpen] = useState(false);
-  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(true);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   const [cards, setCards] = useState([]);
   const [cardToRemove, setCardToRemove] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
+  const [isRegistrationOk, setIsRegistrationOk] = useState(false);
+  //const history = useNavigate();
+
+  const handleRegister = ({ email, password }) => {
+    return auth
+      .register(email, password)
+      .then(() => {
+        setIsRegistrationOk(true);
+      })
+      .catch(() => {
+        setIsRegistrationOk(false);
+      })
+      .finally(() => {
+        setIsInfoPopupOpen(true);
+      });
+
+    //.then(() => {
+    //history.push("/signup");
+    //});
+  };
 
   useEffect(() => {
     api
@@ -195,7 +217,10 @@ function App() {
               />
             }
           />
-          <Route path="/sign-up" element={<Register />} />
+          <Route
+            path="/sign-up"
+            element={<Register handleRegister={handleRegister} />}
+          />
           <Route path="/sign-in" element={<Login />} />
         </Routes>
         <Footer />
@@ -224,7 +249,11 @@ function App() {
           onSubmit={handleCardDelete}
           isLoading={isLoading}
         />
-        <InfoTooltip onClose={closeAllPopups} isOpened={isInfoPopupOpen} />
+        <InfoTooltip
+          onClose={closeAllPopups}
+          isOpened={isInfoPopupOpen}
+          isOk={isRegistrationOk}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
