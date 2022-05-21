@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-//import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
@@ -10,7 +9,7 @@ import DeletionConfirmationPopup from "./DeletionConfirmationPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Register from "./Register";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
@@ -30,20 +29,27 @@ function App() {
   const [cardToRemove, setCardToRemove] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isRegistrationOk, setIsRegistrationOk] = useState(false);
   const [userData, setUserData] = useState();
-  //const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     tokenCheck();
   }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [loggedIn]);
 
   const handleRegister = ({ email, password }) => {
     return auth
       .register(email, password)
       .then(() => {
         setIsRegistrationOk(true);
+        navigate("/sign-in");
       })
       .catch(() => {
         setIsRegistrationOk(false);
@@ -51,20 +57,21 @@ function App() {
       .finally(() => {
         setIsInfoPopupOpen(true);
       });
-
-    //.then(() => {
-    //history.push("/signup");
-    //});
   };
 
   const handleLogin = ({ email, password }) => {
-    return auth.login(email, password).then((data) => {
-      setLoggedIn(true);
-      if (data["token"]) {
-        localStorage.setItem("jwt", data["token"]);
-        tokenCheck();
-      }
-    });
+    return auth
+      .login(email, password)
+      .then((data) => {
+        setLoggedIn(true);
+        if (data["token"]) {
+          localStorage.setItem("jwt", data["token"]);
+          tokenCheck();
+        }
+      })
+      .then(() => {
+        navigate("/");
+      });
   };
 
   const tokenCheck = () => {
@@ -78,7 +85,6 @@ function App() {
           };
           setLoggedIn(true);
           setUserData(userData);
-          console.log(userData);
         }
       });
     }
@@ -227,10 +233,26 @@ function App() {
     };
   }, []);
 
+  function signOut() {
+    localStorage.removeItem("jwt");
+    setLoggedIn(false);
+    setUserData(null);
+    navigate("/sign-in");
+  }
+
+  function navigateToLogin() {
+    navigate("/sign-in");
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page" onClick={closeAllPopups}>
-        <Header loggedIn={loggedIn} />
+        <Header
+          loggedIn={loggedIn}
+          handleSignOut={signOut}
+          userData={userData}
+          navigateToLogin={navigateToLogin}
+        />
         <Routes>
           <Route
             index

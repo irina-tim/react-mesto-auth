@@ -2,7 +2,6 @@ export const BASE_URL = "https://auth.nomoreparties.co";
 
 const checkResponse = (res) => {
   if (res.ok) {
-    console.log(res);
     return res.json();
   }
   return res.json().then((data) => {

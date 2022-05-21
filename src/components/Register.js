@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 function Register({ handleRegister }) {
   const [formParams, setFormParams] = useState({
@@ -53,9 +54,9 @@ function Register({ handleRegister }) {
       </form>
       <p className="sign__paragraph">
         Уже зарегистрированы?&ensp;
-        <a href="/sign-in" className="sign__link">
+        <NavLink to="/sign-in" className="sign__link">
           Войти
-        </a>
+        </NavLink>
       </p>
     </div>
   );

@@ -3,6 +3,9 @@
   color: white;
   font: normal 18px/22px "Inter", Arial, sans-serif;
   transition: opacity 0.3s ease;
+  background-color: transparent;
+  border: none;
+  padding: 0;
 }
 
 .header__link:hover {
