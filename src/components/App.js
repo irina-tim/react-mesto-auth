@@ -32,7 +32,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
   const [isRegistrationOk, setIsRegistrationOk] = useState(false);
+  const [userData, setUserData] = useState();
   //const history = useNavigate();
+
+  useEffect(() => {
+    tokenCheck();
+  }, []);
 
   const handleRegister = ({ email, password }) => {
     return auth
@@ -50,6 +55,33 @@ function App() {
     //.then(() => {
     //history.push("/signup");
     //});
+  };
+
+  const handleLogin = ({ email, password }) => {
+    return auth.login(email, password).then((data) => {
+      setLoggedIn(true);
+      if (data["token"]) {
+        localStorage.setItem("jwt", data["token"]);
+        tokenCheck();
+      }
+    });
+  };
+
+  const tokenCheck = () => {
+    if (localStorage.getItem("jwt")) {
+      let jwt = localStorage.getItem("jwt");
+      auth.getToken(jwt).then((res) => {
+        if (res) {
+          let userData = {
+            id: res.data._id,
+            email: res.data.email,
+          };
+          setLoggedIn(true);
+          setUserData(userData);
+          console.log(userData);
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -221,7 +253,12 @@ function App() {
             path="/sign-up"
             element={<Register handleRegister={handleRegister} />}
           />
-          <Route path="/sign-in" element={<Login />} />
+          <Route
+            path="/sign-in"
+            element={
+              <Login handleLogin={handleLogin} tokenCheck={tokenCheck} />
+            }
+          />
         </Routes>
         <Footer />
         <EditProfilePopup

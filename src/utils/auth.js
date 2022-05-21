@@ -16,9 +16,26 @@ export const register = (email, password) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      password: password,
-      email: email,
-    }),
+    body: JSON.stringify({ password: password, email: email }),
+  }).then(checkResponse);
+};
+
+export const login = (email, password) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ password: password, email: email }),
+  }).then(checkResponse);
+};
+
+export const getToken = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   }).then(checkResponse);
 };
