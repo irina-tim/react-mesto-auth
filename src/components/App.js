@@ -31,7 +31,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isRegistrationOk, setIsRegistrationOk] = useState(false);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
