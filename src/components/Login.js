@@ -38,6 +38,7 @@ function Login({ handleLogin }) {
         <input
           className="sign__input"
           name="password"
+          type="password"
           aria-label="Пароль"
           placeholder="Пароль"
           minLength="5"

@@ -67,6 +67,7 @@ function Register({ handleRegister }) {
         </span>
         <input
           className="sign__input"
+          type="password"
           name="password"
           aria-label="Пароль"
           placeholder="Пароль"
