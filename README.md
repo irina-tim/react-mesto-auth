@@ -4,7 +4,7 @@
 
 ## Посмотреть проект на GitHub Pages
 
-[Ссылка на страницу на GitHub Pages](https://irina-tim.github.io/)
+[Ссылка на страницу на GitHub Pages](https://irina-tim.github.io/react-mesto-auth/)
 
 ## Функционал
 
