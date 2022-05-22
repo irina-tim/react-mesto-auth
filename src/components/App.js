@@ -244,6 +244,10 @@ function App() {
     navigate("/sign-in");
   }
 
+  function navigateToRegister() {
+    navigate("/sign-up");
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page" onClick={closeAllPopups}>
@@ -252,6 +256,7 @@ function App() {
           handleSignOut={signOut}
           userData={userData}
           navigateToLogin={navigateToLogin}
+          navigateToRegister={navigateToRegister}
         />
         <Routes>
           <Route
