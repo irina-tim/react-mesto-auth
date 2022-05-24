@@ -52,11 +52,11 @@ function AddPlacePopup(props) {
     setIsTitleValid(false);
     setIsLinkValid(false);
     setIsSubmitButtonEnabled(false);
-  }, [props.isOpened]);
+  }, [props.isOpen]);
 
   return (
     <PopupWithForm
-      isOpened={props.isOpened}
+      isOpen={props.isOpen}
       onClose={props.onClose}
       name={"add-card"}
       title={"Новое место"}

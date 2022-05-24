@@ -7,7 +7,7 @@ function DeletionConfirmationPopup(props) {
   }
   return (
     <PopupWithForm
-      isOpened={props.isOpened}
+      isOpen={props.isOpen}
       onClose={props.onClose}
       name={"deletion-confirmation"}
       title={"Вы уверены?"}

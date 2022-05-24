@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
@@ -224,20 +224,6 @@ function App() {
       });
   }, []);
 
-  //Handle esc click
-  const closeByEsc = useCallback((event) => {
-    if (event.key === "Escape") {
-      closeAllPopups();
-    }
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("keydown", closeByEsc, false);
-    return () => {
-      document.removeEventListener("keydown", closeByEsc, false);
-    };
-  }, []);
-
   function signOut() {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
@@ -294,33 +280,33 @@ function App() {
         </Routes>
         <Footer />
         <EditProfilePopup
-          isOpened={isEditProfilePopupOpen}
+          isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           isLoading={isLoading}
         />
         <AddPlacePopup
-          isOpened={isAddPlacePopupOpen}
+          isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           isLoading={isLoading}
         />
         <EditAvatarPopup
-          isOpened={isEditAvatarPopupOpen}
+          isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           isLoading={isLoading}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <DeletionConfirmationPopup
-          isOpened={isCardDeletePopupOpen}
+          isOpen={isCardDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleCardDelete}
           isLoading={isLoading}
         />
         <InfoTooltip
           onClose={closeAllPopups}
-          isOpened={isInfoPopupOpen}
+          isOpen={isInfoPopupOpen}
           isOk={isRegistrationOk}
         />
       </div>

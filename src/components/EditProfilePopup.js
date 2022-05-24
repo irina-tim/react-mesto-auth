@@ -29,7 +29,7 @@ function EditProfilePopup(props) {
     setIsNameValid(true);
     setIsDescriptionValid(true);
     setIsSubmitButtonEnabled(true);
-  }, [currentUser, props.isOpened]);
+  }, [currentUser, props.isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -51,7 +51,7 @@ function EditProfilePopup(props) {
 
   return (
     <PopupWithForm
-      isOpened={props.isOpened}
+      isOpen={props.isOpen}
       onClose={props.onClose}
       name={"profile-edit"}
       title={"Редактировать профиль"}

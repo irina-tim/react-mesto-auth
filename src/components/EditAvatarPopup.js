@@ -31,11 +31,11 @@ function EditAvatarPopup(props) {
     setUrl("");
     setIsValid(true);
     setIsSubmitButtonEnabled(false);
-  }, [props.isOpened]);
+  }, [props.isOpen]);
 
   return (
     <PopupWithForm
-      isOpened={props.isOpened}
+      isOpen={props.isOpen}
       onClose={props.onClose}
       name={"avatar-update"}
       title={"Обновить аватар"}

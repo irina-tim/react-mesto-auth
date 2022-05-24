@@ -1,14 +1,20 @@
 import noImage from "../images/no-image.jpg";
+import Popup from "./Popup";
+import { useEffect, useState } from "react";
 
 function ImagePopup({ card, onClose }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    Object.keys(card).length > 0 ? setIsOpen(true) : setIsOpen(false);
+  }, [Object.keys(card).length]);
+
   function handleImageLoadingError(e) {
     e.target.src = noImage;
   }
+
   return (
-    <div
-      className={`popup popup-photo-view 
-        ${Object.keys(card).length > 0 && "popup_opened"}`}
-    >
+    <Popup isOpen={isOpen} name="photo-view" onClose={onClose}>
       <div className="popup-photo-view__container">
         <img
           className="popup-photo-view__image"
@@ -17,17 +23,8 @@ function ImagePopup({ card, onClose }) {
           onError={handleImageLoadingError}
         />
         <h2 className="popup-photo-view__title">{card.name}</h2>
-        <button
-          onClick={onClose}
-          style={{
-            display: Object.keys(card).length ? "inline-block" : "none",
-          }}
-          className="popup__close popup-photo-view__close-button"
-          type="button"
-          aria-label="Закрыть окно просмотра фотографии"
-        ></button>
       </div>
-    </div>
+    </Popup>
   );
 }
 
