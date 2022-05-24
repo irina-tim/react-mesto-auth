@@ -64,52 +64,50 @@ function AddPlacePopup(props) {
       onSubmit={handleSubmit}
       isSubmitButtonEnabled={isSubmitButtonEnabled}
     >
-      <>
-        <div className="popup__field">
-          <input
-            id="card-title-input"
-            className={`popup__input popup__input_type_card-title ${
-              !isTitleValid && cardTitle !== "" && "popup__input_type_error"
-            }`}
-            type="text"
-            name="title"
-            placeholder="Название"
-            required
-            minLength="2"
-            maxLength="30"
-            onChange={handleTitleChange}
-            value={cardTitle}
-          />
-          <span
-            className={`card-title-input-error popup__input-error ${
-              !isTitleValid && cardTitle !== "" && "popup__input-error_visible"
-            }`}
-          >
-            {!isTitleValid && cardTitle !== "" && titleErrorMessage}
-          </span>
-        </div>
-        <div className="popup__field">
-          <input
-            id="image-link-input"
-            className={`popup__input popup__input_type_image-link ${
-              !isLinkValid && cardLink !== "" && "popup__input_type_error"
-            }`}
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            onChange={handleLinkChange}
-            value={cardLink}
-            required
-          />
-          <span
-            className={`image-link-input-error popup__input-error ${
-              !isLinkValid && cardLink !== "" && "popup__input-error_visible"
-            }`}
-          >
-            {!isLinkValid && cardLink !== "" && linkErrorMessage}
-          </span>
-        </div>
-      </>
+      <div className="popup__field">
+        <input
+          id="card-title-input"
+          className={`popup__input popup__input_type_card-title ${
+            !isTitleValid && cardTitle !== "" && "popup__input_type_error"
+          }`}
+          type="text"
+          name="title"
+          placeholder="Название"
+          required
+          minLength="2"
+          maxLength="30"
+          onChange={handleTitleChange}
+          value={cardTitle}
+        />
+        <span
+          className={`card-title-input-error popup__input-error ${
+            !isTitleValid && cardTitle !== "" && "popup__input-error_visible"
+          }`}
+        >
+          {!isTitleValid && cardTitle !== "" && titleErrorMessage}
+        </span>
+      </div>
+      <div className="popup__field">
+        <input
+          id="image-link-input"
+          className={`popup__input popup__input_type_image-link ${
+            !isLinkValid && cardLink !== "" && "popup__input_type_error"
+          }`}
+          type="url"
+          name="link"
+          placeholder="Ссылка на картинку"
+          onChange={handleLinkChange}
+          value={cardLink}
+          required
+        />
+        <span
+          className={`image-link-input-error popup__input-error ${
+            !isLinkValid && cardLink !== "" && "popup__input-error_visible"
+          }`}
+        >
+          {!isLinkValid && cardLink !== "" && linkErrorMessage}
+        </span>
+      </div>
     </PopupWithForm>
   );
 }

@@ -29,7 +29,7 @@ export const login = (email, password) => {
   }).then(checkResponse);
 };
 
-export const getToken = (token) => {
+export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {

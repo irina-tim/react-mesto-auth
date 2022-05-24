@@ -8,7 +8,7 @@ function Login({ handleLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let { email, password } = formParams;
+    const { email, password } = formParams;
     handleLogin({ email, password }).catch((err) => {
       console.log(err.message);
     });
@@ -34,6 +34,7 @@ function Login({ handleLogin }) {
           placeholder="Email"
           required
           onChange={handleChange}
+          value={formParams.email}
         ></input>
         <input
           className="sign__input"
@@ -45,6 +46,7 @@ function Login({ handleLogin }) {
           maxLength="15"
           required
           onChange={handleChange}
+          value={formParams.password}
         ></input>
         <button type="submit" className="sign__submit-button">
           Войти

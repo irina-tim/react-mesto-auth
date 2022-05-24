@@ -69,24 +69,30 @@ function App() {
           tokenCheck();
         }
       })
-      .then(() => {
+      .catch((err) => {
+        console.log(err);
         navigate("/");
       });
   };
 
   const tokenCheck = () => {
     if (localStorage.getItem("jwt")) {
-      let jwt = localStorage.getItem("jwt");
-      auth.getToken(jwt).then((res) => {
-        if (res) {
-          let userData = {
-            id: res.data._id,
-            email: res.data.email,
-          };
-          setLoggedIn(true);
-          setUserData(userData);
-        }
-      });
+      const jwt = localStorage.getItem("jwt");
+      auth
+        .checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            const userData = {
+              id: res.data._id,
+              email: res.data.email,
+            };
+            setLoggedIn(true);
+            setUserData(userData);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -215,8 +221,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {});
+      });
   }, []);
 
   //Handle esc click

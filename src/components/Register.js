@@ -20,7 +20,7 @@ function Register({ handleRegister }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let { email, password } = formParams;
+    const { email, password } = formParams;
     handleRegister({ email, password }).catch((err) => {
       console.log(err.message);
     });
@@ -57,6 +57,7 @@ function Register({ handleRegister }) {
           placeholder="Email"
           required
           onChange={handleChange}
+          value={email}
         ></input>
         <span
           className={`sign__input-error ${
@@ -75,6 +76,7 @@ function Register({ handleRegister }) {
           maxLength="15"
           required
           onChange={handleChange}
+          value={password}
         ></input>
         <span
           className={`sign__input-error ${
