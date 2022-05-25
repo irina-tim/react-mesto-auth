@@ -1,58 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { useFormAndValidation } from "../hooks/useFormAndValidation.js";
 
 function AddPlacePopup(props) {
-  const [cardTitle, setCardTitle] = useState("");
-  const [cardLink, setCardLink] = useState("");
-  const titleChecks = ["valueMissing", "tooShort"];
-  const linkChecks = ["valueMissing", "typeMismatch"];
-  const titleErrorMessage = "Please use at least 2 characters";
-  const linkErrorMessage = "Please enter a valid URL";
-  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
-  const [isTitleValid, setIsTitleValid] = useState(false);
-  const [isLinkValid, setIsLinkValid] = useState(false);
-  const checkValidity = (e) => {
-    const { validity } = e.target;
-
-    if (e.target.name === "title") {
-      const checksPassed =
-        titleChecks.filter((check) => validity[check]).length === 0;
-      setIsTitleValid(checksPassed);
-    }
-    if (e.target.name === "link") {
-      const checksPassed =
-        linkChecks.filter((check) => validity[check]).length === 0;
-      setIsLinkValid(checksPassed);
-    }
-  };
-
-  useEffect(() => {
-    if (isTitleValid && isLinkValid) setIsSubmitButtonEnabled(true);
-    else setIsSubmitButtonEnabled(false);
-  }, [isTitleValid, isLinkValid]);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onAddPlace({ title: cardTitle, link: cardLink });
-  }
-
-  function handleTitleChange(e) {
-    setCardTitle(e.target.value);
-    checkValidity(e);
-  }
-
-  function handleLinkChange(e) {
-    setCardLink(e.target.value);
-    checkValidity(e);
+    props.onAddPlace({ title: values.title, link: values.link });
   }
 
   useEffect(() => {
-    setCardTitle("");
-    setCardLink("");
-    setIsTitleValid(false);
-    setIsLinkValid(false);
-    setIsSubmitButtonEnabled(false);
-  }, [props.isOpen]);
+    resetForm();
+  }, [props.isOpen, resetForm]);
 
   return (
     <PopupWithForm
@@ -62,13 +23,13 @@ function AddPlacePopup(props) {
       title={"Новое место"}
       submitButtonText={props.isLoading ? "Сохранение..." : "Сохранить"}
       onSubmit={handleSubmit}
-      isSubmitButtonEnabled={isSubmitButtonEnabled}
+      isSubmitButtonEnabled={isValid}
     >
       <div className="popup__field">
         <input
           id="card-title-input"
           className={`popup__input popup__input_type_card-title ${
-            !isTitleValid && cardTitle !== "" && "popup__input_type_error"
+            errors.title && "popup__input_type_error"
           }`}
           type="text"
           name="title"
@@ -76,36 +37,36 @@ function AddPlacePopup(props) {
           required
           minLength="2"
           maxLength="30"
-          onChange={handleTitleChange}
-          value={cardTitle}
+          onChange={handleChange}
+          value={values.title || ""}
         />
         <span
           className={`card-title-input-error popup__input-error ${
-            !isTitleValid && cardTitle !== "" && "popup__input-error_visible"
+            errors.title && "popup__input-error_visible"
           }`}
         >
-          {!isTitleValid && cardTitle !== "" && titleErrorMessage}
+          {errors.title}
         </span>
       </div>
       <div className="popup__field">
         <input
           id="image-link-input"
           className={`popup__input popup__input_type_image-link ${
-            !isLinkValid && cardLink !== "" && "popup__input_type_error"
+            errors.link && "popup__input_type_error"
           }`}
           type="url"
           name="link"
           placeholder="Ссылка на картинку"
-          onChange={handleLinkChange}
-          value={cardLink}
+          onChange={handleChange}
+          value={values.link || ""}
           required
         />
         <span
           className={`image-link-input-error popup__input-error ${
-            !isLinkValid && cardLink !== "" && "popup__input-error_visible"
+            errors.link && "popup__input-error_visible"
           }`}
         >
-          {!isLinkValid && cardLink !== "" && linkErrorMessage}
+          {errors.link}
         </span>
       </div>
     </PopupWithForm>

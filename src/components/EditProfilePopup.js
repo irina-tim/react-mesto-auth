@@ -1,51 +1,22 @@
 import PopupWithForm from "./PopupWithForm";
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useFormAndValidation } from "../hooks/useFormAndValidation.js";
 
 function EditProfilePopup(props) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const currentUser = useContext(CurrentUserContext);
-  const checks = ["valueMissing", "tooShort"];
-  const errorMessage = "Please use at least 2 characters";
-  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false);
-  const [isNameValid, setIsNameValid] = useState(true);
-  const [isDescriptionValid, setIsDescriptionValid] = useState(true);
-  const checkValidity = (e) => {
-    const { validity } = e.target;
-    const checksPassed = checks.filter((check) => validity[check]).length === 0;
-    if (e.target.name === "name") setIsNameValid(checksPassed);
-    if (e.target.name === "description") setIsDescriptionValid(checksPassed);
-  };
+  const { values, handleChange, errors, isValid, setValues } =
+    useFormAndValidation();
 
   useEffect(() => {
-    if (isNameValid && isDescriptionValid) setIsSubmitButtonEnabled(true);
-    else setIsSubmitButtonEnabled(false);
-  }, [isDescriptionValid, isNameValid]);
-
-  useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-    setIsNameValid(true);
-    setIsDescriptionValid(true);
-    setIsSubmitButtonEnabled(true);
+    setValues({ name: currentUser.name, description: currentUser.about });
   }, [currentUser, props.isOpen]);
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-    checkValidity(e);
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-    checkValidity(e);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onUpdateUser({
-      name,
-      about: description,
+      name: values.name,
+      about: values.description,
     });
   }
 
@@ -57,13 +28,13 @@ function EditProfilePopup(props) {
       title={"Редактировать профиль"}
       submitButtonText={props.isLoading ? "Сохранение..." : "Сохранить"}
       onSubmit={handleSubmit}
-      isSubmitButtonEnabled={isSubmitButtonEnabled}
+      isSubmitButtonEnabled={isValid}
     >
       <div className="popup__field">
         <input
           id="name-input"
           className={`popup__input popup__input_type_name ${
-            !isNameValid && "popup__input_type_error"
+            errors.name && "popup__input_type_error"
           }`}
           type="text"
           name="name"
@@ -71,22 +42,22 @@ function EditProfilePopup(props) {
           required
           minLength="2"
           maxLength="40"
-          onChange={handleNameChange}
-          value={name || ""}
+          onChange={handleChange}
+          value={values.name || ""}
         />
         <span
           className={`name-input-error popup__input-error ${
-            !isNameValid && "popup__input-error_visible"
+            errors.name && "popup__input-error_visible"
           }`}
         >
-          {!isNameValid && errorMessage}
+          {errors.name}
         </span>
       </div>
       <div className="popup__field">
         <input
           id="description-input"
           className={`popup__input popup__input_type_description ${
-            !isDescriptionValid && "popup__input_type_error"
+            errors.description && "popup__input_type_error"
           }`}
           type="text"
           name="description"
@@ -94,15 +65,15 @@ function EditProfilePopup(props) {
           required
           minLength="2"
           maxLength="200"
-          onChange={handleDescriptionChange}
-          value={description || ""}
+          onChange={handleChange}
+          value={values.description || ""}
         />
         <span
           className={`description-input-errorr popup__input-error ${
-            !isDescriptionValid && "popup__input-error_visible"
+            errors.description && "popup__input-error_visible"
           }`}
         >
-          {!isDescriptionValid && errorMessage}
+          {errors.description}
         </span>
       </div>
     </PopupWithForm>
